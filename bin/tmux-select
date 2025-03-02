@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ $1 -eq ""]; then
+	entry=$(tmux ls| start-bemenu)
+else
+	entry=$1
+fi
+
+if [ $entry == ""]; then
+	exit
+fi
+
+sessionName=$(echo $entry | cut -d ":" -f1)
+#kitty -e tmux attach -t $sessionName
+foot tmux attach -t $sessionName

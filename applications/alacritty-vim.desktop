@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Alacritty Vim
+Comment=Terminal Emulator
+Exec=alacritty -e nvim
+Icon=utilities-terminal
+Terminal=false
+Type=Application
+Categories=System;Utility;TerminalEmulator;

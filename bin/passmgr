@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+pass_name=$(cd $HOME/.password-store && rg --files | sed 's/\.gpg$//' | start-bemenu)
+[[ $pass_name != "" ]] && pass show -c $pass_name

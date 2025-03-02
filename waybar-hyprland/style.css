@@ -1,0 +1,198 @@
+@define-color unfocused_color #ebdbb2;
+@define-color focused_color #8ec07c;
+@define-color module_background #ebdbb2;
+@define-color bar_background #3c3836;
+@define-color blue1 #458588;
+@define-color blue2 #83a598;
+
+@define-color unfocused_color #F5E9CF;
+@define-color focused_color #C96868;
+@define-color visible_color #7DB9B6;
+@define-color bar_background #3c3836;
+@define-color module_background #F5E9CF;
+@define-color window_text_color #e96479;
+@define-color module_text_color #000000;
+
+
+* {
+    border: none;
+    border-radius: 0;
+    font-family: JetBrainsMono Nerd Font Mono;
+    font-size: 1rem;
+    min-height: 0;
+    margin: 0 0px;
+}
+
+window#waybar {
+    background-color: @bar_background;
+    border-bottom: none;
+    color: @unfocused_color;
+    transition-property: background-color;
+    transition-duration: 0.5s;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+#workspaces button {
+    padding: 0 5px;
+    color: @unfocused_color;
+    border: 1px inset;
+    border-radius: 0px;
+}
+
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+/* Source https://github.com/Alexays/Waybar/issues/60 */
+#workspaces button:hover {
+  box-shadow: none; /* Remove predefined box-shadow */
+  text-shadow: none; /* Remove predefined text-shadow */
+  background: none; /* Remove predefined background color (white) */
+  transition: none; /* Disable predefined animations */
+}
+
+/*
+#workspaces button.visible {
+  background: #90b1b1;
+}
+
+#workspaces button.focused {
+    background-color: @focused_color;
+    color: #282828;
+    border-bottom: none;
+}
+*/
+
+#workspaces button{
+    background-color: @unfocused_color;
+    color: #282828;
+    border-bottom: none;
+}
+
+#workspaces button.visible {
+    background-color: @visible_color;
+    color: #282828;
+    border-bottom: none;
+}
+
+#workspaces button.focused {
+    background-color: @focused_color;
+    color: #282828;
+    border-bottom: none;
+}
+
+
+#workspaces button.persistent {
+    background-color: @bar_background;
+    border-bottom: none;
+    border-color: @bar_background;
+}
+
+#workspaces button.urgent {
+    background-color: #820900;
+}
+
+
+#mode {
+    background-color: #64727d;
+    border-bottom: 3px solid #ffffff;
+}
+
+#window {
+    margin-left: 5px;
+    color: @window_text_color;
+}
+#clock,
+#battery,
+#backlight,
+#network,
+#pulseaudio,
+#mode,
+#idle_inhibitor,
+#mpd {
+    padding: 0 14px;
+    margin: 0 0px;
+    color: #ffffff;
+}
+
+#tray {
+    color: @module_text_color;
+    background-color: @module_background;
+}
+
+#clock {
+    color: @module_text_color;
+    background-color: @module_background;
+}
+
+#battery {
+    background-color: @module_background;
+    color: @module_text_color;
+}
+
+#battery.charging {
+    color: @module_text_color;
+    background-color: @module_background;
+}
+
+@keyframes blink {
+    to {
+        background-color: @module_background;
+        color: #282828;
+    }
+}
+
+#battery.critical:not(.charging) {
+    background-color: #282828;
+    color: @module_text_color;
+    animation-name: blink;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+label:focus {
+    background-color: #000000;
+}
+
+#backlight {
+    background-color: @module_background;
+    color: @module_text_color;
+}
+
+#network {
+    background-color: @module_background;
+    color: @module_text_color;
+}
+
+#network.disconnected {
+    background-color: @module_background;
+}
+
+#pulseaudio {
+    background-color: @module_background;
+    color: @module_text_color;
+    border-radius: 5px 0px 0px 5px;
+}
+
+#pulseaudio.muted {
+    background-color: @module_background;
+    color: @module_text_color;
+}
+
+#idle_inhibitor {
+    background-color: rgba(0, 0, 0, 0);
+    color: @module_text_color;
+    border-radius: 5px;
+    margin-right: 2px;
+    margin-left: 3px;
+}
+
+#idle_inhibitor.activated {
+    background-color: @blue2;
+    color: #282828;
+    border-radius: 5px;
+    margin-right: 2px;
+    margin-left: 5px;
+}

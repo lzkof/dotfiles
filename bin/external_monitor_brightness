@@ -1,0 +1,7 @@
+#!/bin/bash
+
+sudo ddcutil setvcp 10 $1
+
+
+
+

@@ -1,0 +1,281 @@
+#
+# Variables
+#
+set $mod Mod1
+set $left h
+set $down j
+set $up k
+set $right l
+#set $browser brave --force-device-scale-factor=1.3
+set $browser zen-browser
+set $term foot
+set $filemanager $term -e lf
+set $todo $term -e project-select.sh ~/projects/todo/
+set $tmux-select tmux-select.sh
+set $tmux-create tmux-create.sh
+set $note open_note
+#set $menu source $HOME/.config/zsh/.zshenv && fuzzel -w 60 yes -T "kitty -e" -f "MesloLGS NF"
+set $menu j4-dmenu-desktop --dmenu='BEMENU_BACKEND=wayland start-bemenu.sh'
+set $mail evolution 
+set $passmgr fuzzel-pass.sh
+#set $lock "nohup hyprlock > /dev/null 2>&1 &"
+set $lock swaylock -c 000000
+
+#
+# Autostarts
+#
+exec_always shikane --oneshot
+
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+exec autotiling 
+exec mako
+exec shikane
+exec wl-paste -t text --watch clipman store --no-persist
+exec swayidle -w \
+    timeout 120 $lock \
+    timeout 60 'light -O; swaymsg "output * power off"' \
+            resume 'swaymsg "output * power on"; light -I' \
+    before-sleep $lock
+
+
+#
+### Key bindings
+#
+bindsym $mod+q kill
+bindsym $mod+space exec $menu
+
+bindsym $mod+Shift+x exec $lock
+bindsym $mod+p exec $passmgr
+bindsym $mod+Return exec $term
+bindsym $mod+Shift+f exec $browser
+#bindsym $mod+t exec $todo
+bindsym $mod+o exec $tmux-select
+bindsym $mod+shift+o exec $tmux-create
+
+# window switcher
+bindsym $mod+n exec ~/.local/bin/window-switcher.sh
+
+## cycle through workspaces
+bindsym $mod+tab workspace back_and_forth
+#bindsym $mod+tab workspace next
+#bindsym $mod+shift+tab workspace next
+
+# Drag floating windows by holding down $mod and left mouse button.
+# Resize them with right mouse button + $mod.
+# Despite the name, also works for non-floating windows.
+# Change normal to inverse to use left mouse button for resizing and right
+# mouse button for dragging.
+floating_modifier $mod normal
+
+# Reload the configuration file
+bindsym $mod+Shift+n reload
+
+# Exit sway (logs you out of your Wayland session)
+bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+
+#
+# Function keys
+#
+bindsym --locked XF86MonBrightnessUp exec --no-startup-id light -A 5
+bindsym --locked XF86MonBrightnessDown exec --no-startup-id light -U 5
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86Display exec --no-startup-id start_redshift
+bindsym XF86Favorites exec --no-startup-id grim -l 0 -g "$(slurp)" - | wl-copy
+# bindsym --locked XF86Tools ...
+# bindsym XF86Go ...
+#
+# Moving around:
+#
+# Move your focus around
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+# bindsym $mod+semicolon focus prev
+# bindsym $mod+semicolon focus tiling
+# bindsym $mod+semicolon focus next
+# Or use $mod+[up|down|left|right]
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Move the focused window with the same, but add Shift
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+# Ditto, with arrow keys
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+#
+# Workspaces:
+#
+# Switch to workspace
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
+bindsym $mod+i workspace irc
+bindsym $mod+m workspace mail
+bindsym $mod+c workspace calendar
+#bindsym $mod+t workspace todo
+
+# Move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
+bindsym $mod+shift+i move container to workspace irc
+bindsym $mod+shift+c move container to workspace calendar
+bindsym $mod+shift+m move container to workspace mail
+#bindsym $mod+shift+t move container to workspace todo
+
+## Moving workspaces to outputs
+bindsym $mod+Control+Shift+Right move workspace to output right
+bindsym $mod+Control+Shift+Left move workspace to output left
+bindsym $mod+Control+Shift+Down move workspace to output down
+bindsym $mod+Control+Shift+Up move workspace to output up
+
+#
+## Appearance
+#
+default_border pixel 2
+gaps inner 3
+gaps outer 1
+smart_gaps on
+smart_borders on
+workspace_auto_back_and_forth off
+
+
+set {
+    $col_urgent                    #af3a03
+    $col_focused                   #f2e5bc
+    $col_unfocused                 #282828
+    $col_focused_inactive          #665c54
+    $col_text_dark                 #504945
+    $col_text_light                #bdae93
+    $col_text_lightest             #fbf1c7
+    $col_urgent_border             #7c6f64
+    $col_focused_border            #ebdbb2
+    $col_unfocused_border          #3c3836
+    $col_focused_inactive_border   #7c6f64
+}
+
+# class                  border                        background             text                indicator              child_border
+client.focused           $col_focused_border           $col_focused           $col_text_dark      $col_focused           $col_focused_border
+client.focused_inactive  $col_focused_inactive_border  $col_focused_inactive  $col_text_lightest  $col_focused_inactive  $col_focused_inactive_border
+client.unfocused         $col_unfocused_border         $col_unfocused         $col_text_light     $col_unfocused         $col_unfocused_border
+client.urgent            $col_urgent_border            $col_urgent            $col_text_lightest  $col_urgent            $col_urgent_border
+
+
+#client.focused          #002b36 #C96868 #ebdbb2
+#client.focused_inactive #002b36 #7DB9B6 #000000 #073642 #2f343f
+#client.unfocused        #002b36 #1E2326 #ebdbb2 #073642 #2f343f
+#client.urgent           #002b36 #dc322f #000000 #002b36 #2f343f
+font monospace 14
+titlebar_padding 10 1
+titlebar_border_thickness 1
+
+#
+# Layout
+#
+# You can "split" the current object of your focus with
+# $mod+b or $mod+v, for horizontal and vertical splits
+# respectively.
+#bindsym $mod+b splith
+#bindsym $mod+v splitv
+
+# Switch the current container between different layout styles
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# Make the current focus fullscreen
+bindsym $mod+f fullscreen
+#bindsym $mod+Shift+g fullscreen toggle global
+
+# Toggle the current focus between tiling and floating mode
+bindsym $mod+Shift+space floating toggle
+
+# Swap focus between the tiling area and the floating area
+bindsym $mod+d focus mode_toggle
+
+# Move focus to the parent container
+bindsym $mod+a focus parent
+bindsym $mod+b focus child
+#
+# Scratchpad:
+#
+# Sway has a "scratchpad", which is a bag of holding for windows.
+# You can send windows there and get them back later.
+
+# Move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+minus scratchpad show
+#
+# Resizing containers:
+#
+mode "resize" {
+    # left will shrink the containers width
+    # right will grow the containers width
+    # up will shrink the containers height
+    # down will grow the containers height
+    bindsym $left resize shrink width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink height 10px
+    bindsym $right resize grow width 10px
+
+    # Ditto, with arrow keys
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+bar {
+    swaybar_command waybar
+}
+
+input * xkb_layout "eu"
+#output * adaptive_sync off
+output * bg ~/.config/wallpapers/wallpaper.png fill
+
+#input "type:keyboard" {
+#    xkb_options caps:escape
+#}
+
+# Focus workspace one at startup
+workspace 1
+workspace_layout tabbed
+
+include /etc/sway/config.d/*
+
+# Include host specific config
+include "~/.config/sway/`hostnamectl hostname`/*"

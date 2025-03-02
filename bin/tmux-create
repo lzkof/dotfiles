@@ -1,0 +1,27 @@
+#!/bin/bash
+
+if [ $1 -eq ""]; then
+	folders+=". "
+	folders+=$(find -L /home/lorenz/jd/ -maxdepth 3 -type d | sed 's|^/home/lorenz/jd/||' | sort -n )
+	#folders+=" /home/lorenz/docs"
+	#folders+=" /home/lorenz/.config/nvim"
+	#folders+=" /home/lorenz/.config/tmux"
+	#folders+=" /home/lorenz/.config/alacritty"
+	folder=$(echo "$folders" | sed 's/ /\n/g'| start-bemenu)
+else
+	folder=$1
+	exit
+fi
+
+if [ $folder == ""]; then
+	exit
+fi
+
+cd /home/lorenz/jd/"$folder" || exit 1
+
+# build window name
+dirname=$(basename "$PWD")
+#kitten @ set-window-title "$dirname"
+#kitty -e tmux new -A -s "$dirname"
+
+foot -a $dirname tmux new -A -s "$dirname"

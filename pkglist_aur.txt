@@ -1,0 +1,15 @@
+clipman
+csvlens
+mutt-wizard
+nomacs
+shikane
+sublime-text-4
+sworkstyle
+thinkfan
+thunderbird-beta-bin
+wdisplays
+wlr-brightness-git
+wlrctl
+yay-git
+zsh-theme-powerlevel10k-git
+autotiling

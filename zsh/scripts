@@ -1,0 +1,145 @@
+ex ()
+{
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)   tar xjf $1   ;;
+      *.tar.gz)    tar xzf $1   ;;
+      *.bz2)       bunzip2 $1   ;;
+      *.rar)       unrar x $1     ;;
+      *.gz)        gunzip $1    ;;
+      *.tar)       tar xf $1    ;;
+      *.tbz2)      tar xjf $1   ;;
+      *etgz)       tar xzf $1   ;;
+      *.zip)       unzip $1     ;;
+      *.Z)         uncompress $1;;
+      *.7z)        7z x $1      ;;
+      *)           echo "'$1' cannot be extracted via ex()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
+
+o() {
+    if [[ $# -eq 0 ]]; then
+        echo "Usage: o <program_or_file>"
+        return 1
+    fi
+
+    for target in "$@"; do
+        if [[ -f "$target" || -d "$target" ]]; then
+            # File or directory exists, open it
+            nohup xdg-open "$target" > /dev/null 2>&1 & disown
+        else
+            # File or program does not exist
+            echo "Error: '$target' not found."
+        fi
+    done
+}
+
+# scripts
+meet () {
+    d=`date -u '+%Y-%m-%d'`
+    file="$PWD/${d}-${1}.md"
+    vim "$file"
+    echo "Edited $file"
+}
+
+new_diary () {
+    d=`date -u '+%Y-%m-%d'`
+    file="$PWD/${d}.md"
+    vim "$file"
+    echo "Edited $file"
+}
+
+new_project () {
+    d=`date -u '+%Y-%m'`
+    file=/home/lorenz/projects/${d}-${1}
+    echo $file
+    mkdir $file
+    cd $file
+    echo "New project at $file"
+}
+
+# scripts
+note () {
+    d=`date -u '+%Y-%m-%d'`
+    file="/home/lorenz/lkb/00-projects/${d}-${1}.md"
+    vim "$file"
+    echo "Edited $file"
+}
+
+lfcd () {
+    tmp="$(mktemp)"
+    \lf -last-dir-path="$tmp" "$@"
+    if [ -f "$tmp" ]; then
+        dir="$(cat "$tmp")"
+        \rm -f "$tmp"
+        if [ -d "$dir" ]; then
+            if [ "$dir" != "$(pwd)" ]; then
+                cd "$dir"
+            fi
+        fi
+    fi
+}
+
+
+# Define the 'open' function
+a() {
+    # Check if the file exists
+    if [[ ! -e $1 ]]; then
+        # echo "File does not exist: $1"
+        return 1
+    fi
+
+
+    # Get the MIME type of the file
+    local mimetype=$(file --mime-type -b "$1")
+
+    # Depending on the MIME type, perform different actions
+    case "$mimetype" in
+        text/*)
+            ${EDITOR:-vim} "$1"
+            ;;
+        image/*)
+            ${IMAGE_VIEWER:-imv} "$1"
+            ;;
+        inode/directory)
+            cd "$1"
+            ;;
+        *)
+            # If the MIME type is not handled above, use xdg-open as a fallback
+            xdg-open "$1"
+            ;;
+    esac
+    f
+}
+
+f () {
+  result=$(CLICOLOR_FORCE=1 exa --color=always --group-directories-first --sort=extension | fzf --ansi --no-sort --preview '
+    if [[ ! -e {} ]]; then
+        return 1
+    fi
+
+    cd {}
+    local mimetype=$(file --mime-type -b {})
+    case "$mimetype" in
+        text/*)
+            bat --color=always {}
+            ;;
+        inode/directory)
+            exa -1 --color=always --group-directories-first --sort=extension {}
+            ;;
+    esac
+  ')
+  a "$result"
+}
+
+function yy() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	\rm -f -- "$tmp"
+}

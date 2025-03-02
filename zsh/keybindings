@@ -1,0 +1,5 @@
+bindkey "^[[P" delete-char
+bindkey "^E" backward-char
+bindkey "^Y" forward-char
+
+

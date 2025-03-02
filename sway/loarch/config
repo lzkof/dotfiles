@@ -1,0 +1,9 @@
+input "1267:12849:ELAN06A0:00_04F3:3231_Touchpad" {
+  dwt enabled
+  tap enabled
+  tap_button_map lrm
+#  accel_profile flat
+  scroll_factor 0.5
+  pointer_accel 0.5
+}
+

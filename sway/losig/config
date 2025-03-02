@@ -1,0 +1,27 @@
+input "1739:52620:SYNA8005:00_06CB:CD8C_Touchpad" {
+  dwt enabled
+  tap enabled
+  tap_button_map lrm
+#  accel_profile flat
+  scroll_factor 0.5
+  pointer_accel 0.5
+}
+
+
+
+#set $mon1 "Dell Inc. DELL SE2723DS 6JK5KM3"
+#set $mon2 "Chimei Innolux Corporation 0x15E7 Unknown"
+#
+#workspace 1 output $mon1
+#workspace 2 output $mon1
+#workspace 3 output $mon1
+#workspace 4 output $mon1
+#workspace 5 output $mon1
+#workspace 6 output $mon1
+#workspace 7 output $mon1
+#workspace 8 output $mon1
+#workspace 9 output $mon2
+#workspace 0 output $mon2
+#
+
+

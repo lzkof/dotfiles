@@ -1,0 +1,7 @@
+#!/bin/bash
+
+SOURCE="/home/lorenz"
+DESTINATION="/run/media/lorenz/lorenz_ssd/backup_loarch"
+mkdir -p "$DESTINATION"
+
+rsync -avh --delete "$SOURCE" "$DESTINATION" 
