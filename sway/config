@@ -11,13 +11,13 @@ set $browser zen-browser
 set $term foot
 set $filemanager $term -e lf
 set $todo $term -e project-select.sh ~/projects/todo/
-set $tmux-select tmux-select.sh
-set $tmux-create tmux-create.sh
+set $tmux-select tmux-select
+set $tmux-create tmux-create
 set $note open_note
 #set $menu source $HOME/.config/zsh/.zshenv && fuzzel -w 60 yes -T "kitty -e" -f "MesloLGS NF"
-set $menu j4-dmenu-desktop --dmenu='BEMENU_BACKEND=wayland start-bemenu.sh'
+set $menu j4-dmenu-desktop --dmenu='BEMENU_BACKEND=wayland start-bemenu'
 set $mail evolution 
-set $passmgr fuzzel-pass.sh
+set $passmgr passmgr
 #set $lock "nohup hyprlock > /dev/null 2>&1 &"
 set $lock swaylock -c 000000
 
