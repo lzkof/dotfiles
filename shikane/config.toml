@@ -32,7 +32,6 @@ exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\""
     match = "LG Electronics"
     enable = true
     mode = { width = 2560, height = 1440, refresh = 60 }
-    #mode = { width = 1920, height = 1080, refresh = 60 }
     position = { x = 1920, y = 0 }
     scale = 1
 
@@ -41,12 +40,7 @@ exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\""
     enable = false
     mode = { width = 2880, height = 1800, refresh = 60  }
     position = { x = 0, y = 0 }
-    scale = 1.5
-#exec = [
-#    "gsettings set org.gnome.desktop.interface text-scaling-factor 1.0",
-#    "gsettings set org.gnome.desktop.interface scaling-factor 1.0",
-#    "sed -i 's/font_size 15/font_size 13/' ~/.config/kitty/kitty.conf",
-#    "update-kitty.sh"]
+    scale = 1.4
 
 [[profile]]
 name = "default"
@@ -55,9 +49,26 @@ exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\""
     match = "eDP-1"
     enable = true
     mode = { width = 2880, height = 1800, refresh = 60  }
-#    mode = { width = 1920, height = 1200, refresh = 60  }
+    position = { x = 0, y = 0 }
+    scale = 1.5
+
+
+## Tirol Home
+
+[[profile]]
+name = "single_home_tirol"
+exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\""]
+    [[profile.output]]
+    match = "DP-1"
+    enable = true
+    mode = { width = 1920, height = 1080, refresh = 60 }
     position = { x = 0, y = 0 }
     scale = 1
-#    exec = ["gsettings set org.gnome.desktop.interface text-scaling-factor 1.4",
-#    "sed -i 's/font_size 13/font_size 15/' ~/.config/kitty/kitty.conf",
-#    "update-kitty.sh"]
+
+    [[profile.output]]
+    match = "eDP-1"
+    enable = false
+    mode = { width = 2880, height = 1800, refresh = 60  }
+    position = { x = 0, y = 0 }
+    scale = 1.4
+
