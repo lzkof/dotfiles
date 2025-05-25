@@ -50,25 +50,25 @@ exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\""
     enable = true
     mode = { width = 2880, height = 1800, refresh = 60  }
     position = { x = 0, y = 0 }
-    scale = 1.5
+    scale = 1.333333
 
 
 ## Tirol Home
 
-[[profile]]
-name = "single_home_tirol"
-exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\""]
-    [[profile.output]]
-    match = "DP-1"
-    enable = true
-    mode = { width = 1920, height = 1080, refresh = 60 }
-    position = { x = 0, y = 0 }
-    scale = 1
-
-    [[profile.output]]
-    match = "eDP-1"
-    enable = false
-    mode = { width = 2880, height = 1800, refresh = 60  }
-    position = { x = 0, y = 0 }
-    scale = 1.4
+#[[profile]]
+#name = "single_home_tirol"
+#exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\""]
+#    [[profile.output]]
+#    match = "DP-1"
+#    enable = true
+#    mode = { width = 1920, height = 1080, refresh = 60 }
+#    position = { x = 0, y = 0 }
+#    scale = 1
+#
+#    [[profile.output]]
+#    match = "eDP-1"
+#    enable = false
+#    mode = { width = 2880, height = 1800, refresh = 60  }
+#    position = { x = 0, y = 0 }
+#    scale = 1.4
 

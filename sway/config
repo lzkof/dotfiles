@@ -273,7 +273,7 @@ output * bg ~/.config/wallpapers/wallpaper.png fill
 
 # Focus workspace one at startup
 workspace 1
-workspace_layout tabbed
+#workspace_layout tabbed
 
 include /etc/sway/config.d/*
 
