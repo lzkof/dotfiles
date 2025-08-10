@@ -1,13 +1,25 @@
 #!/bin/bash
 
+HOST=$(hostname)
+
+
 if [ $1 -eq ""]; then
 	folders+=". "
-	folders+=$(find -L /home/lorenz/jd/ -maxdepth 3 -type d | sed 's|^/home/lorenz/jd/||' | sort -n )
+	if [[ "$HOST" == "loarch" ]]; then
+		folders+="./zk/todo "
+		folders+=$(find -L /home/lorenz/projects -mindepth 1 -maxdepth 2 -type d -not -path '*/.*'| sed 's|^/home/lorenz|.|' | sort -n)
+	elif [[ "$HOST" == "losig" ]]; then
+		folders+=$(find -L /home/lorenz/projects -mindepth 1 -maxdepth 1 -type d -not -path '*/.*'| sed 's|^/home/lorenz|.|' | sort -n)
+	else
+		echo "This is $HOST — not one of the expected servers."
+	fi
+
 	#folders+=" /home/lorenz/docs"
 	#folders+=" /home/lorenz/.config/nvim"
 	#folders+=" /home/lorenz/.config/tmux"
 	#folders+=" /home/lorenz/.config/alacritty"
 	folder=$(echo "$folders" | sed 's/ /\n/g'| start-bemenu)
+	echo $folder
 else
 	folder=$1
 	exit
@@ -17,7 +29,7 @@ if [ $folder == ""]; then
 	exit
 fi
 
-cd /home/lorenz/jd/"$folder" || exit 1
+cd /home/lorenz/"$folder" || exit 1
 
 # build window name
 dirname=$(basename "$PWD")
