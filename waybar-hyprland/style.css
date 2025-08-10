@@ -11,8 +11,9 @@
 @define-color bar_background #3c3836;
 /*@define-color module_background #F5E9CF;*/
 @define-color module_background transparent;
-@define-color window_text_color #e96479;
-@define-color module_text_color #000000;
+@define-color window_text_color white;
+@define-color module_text_color white;
+@define-color text_color white;
 
 * {
     border: none;
@@ -47,7 +48,7 @@ window#waybar.hidden {
 #workspaces button {
     padding: 0 5px;
     background: @module_background;
-    color: black;
+    color: @text_color;
     border-top: 2px solid transparent;
 }
 
@@ -83,7 +84,7 @@ window#waybar.hidden {
     background-color: @visible_color;
     color: #282828;
     border-bottom: none;
-
+    border-radius: 8px;
 }
 
 #workspaces button.active {
